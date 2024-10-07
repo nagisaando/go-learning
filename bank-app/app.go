@@ -28,7 +28,7 @@ func main() {
 		// this function is coming from communication.go.
 		// we can use this file without importing or exporting because communication.go is part of main package.
 		printOption()
-		_, err := fmt.Scanln(&choice)
+		_, err := fmt.Scanln(&choice) // by passing pointer, Scanln() will dereference the address and access the value, and mutates behind the scene
 
 		// nil means absence of useful value
 		if err != nil {
