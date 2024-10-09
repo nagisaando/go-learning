@@ -3,16 +3,9 @@ package main
 import (
 	"fmt"
 	"time"
-)
 
-// if this type needs to be used by another package,
-// we need to capitalize the name "User"
-type user struct {
-	firstName string
-	lastName  string
-	birthDate string
-	createdAt time.Time
-}
+	"example.com/structs/user"
+)
 
 func main() {
 	var userFirstName string
@@ -24,14 +17,26 @@ func main() {
 	createUserData("enter your last name", &userLastName)
 	createUserData("enter your birth date", &userBirthDate)
 
-	var appUser user
-	appUser = user{
-		firstName: userFirstName,
-		lastName:  userLastName,
-		birthDate: userBirthDate,
-		createdAt: time.Now(),
-	}
+	// [case 1] creates a construct manually
 
+	// 1,
+	// 	type user struct {
+	// 	firstName string
+	// 	lastName  string
+	// 	birthDate string
+	// 	createdAt time.Time
+	// }
+
+	//  var appUser user
+
+	// appUser = user{
+	// 	firstName: userFirstName,
+	// 	lastName:  userLastName,
+	// 	birthDate: userBirthDate,
+	// 	createdAt: time.Now(),
+	// }
+
+	// 2,
 	// appUserShorthand := user{
 	// 	userFirstName,
 	// 	userLastName,
@@ -39,12 +44,42 @@ func main() {
 	// 	time.Now(),
 	// }
 
-	outputUserData(appUser)
+	// 3, with package
+
+	// var appUser *user
+
+	// 	appUser = &user.User{
+	// 	FirstName: userFirstName,
+	// 	LastName:  userLastName,
+	// 	BirthDate: userBirthDate,
+	// 	CreatedAt: time.Now(),
+	// }
+
+	// // [case 2] use construct function
+
+	var appUser *user.User
+
+	appUser, err := user.New(userFirstName, userLastName, userBirthDate)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	appUser.OutputUserData()
+	appUser.ClearUserName()
+	appUser.OutputUserData()
 }
 
-func outputUserData(userStruct user) {
-	fmt.Println(userStruct.firstName, userStruct.lastName, userStruct.birthDate, userStruct.createdAt)
-}
+// [example] use it as regular function:
+//
+//	func outputUserData(userStruct *user) {
+//		// structs allows to access the value without dereferencing it. e.g. (*userStruct).firstName
+//		fmt.Println((*userStruct).firstName)
+//		fmt.Println(userStruct.firstName, userStruct.lastName, userStruct.birthDate, userStruct.createdAt)
+//	}
+//  outputUserData(&appUser)
+
 func createUserData(promptText string, data *string) {
 	fmt.Println(promptText)
 	fmt.Scanln(data)
