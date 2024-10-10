@@ -17,6 +17,20 @@ func main() {
 	createUserData("enter your last name", &userLastName)
 	createUserData("enter your birth date", &userBirthDate)
 
+	var adminPassword string
+	var adminEmail string
+	createUserData("enter admin password", &adminPassword)
+	createUserData("enter admin email", &adminEmail)
+
+	var admin user.Admin
+
+	admin = user.NewAdmin(adminEmail, adminPassword)
+
+	admin.OutputUserData()
+	admin.ShowAdminCredentials()
+	admin.ClearUserName()
+	admin.OutputUserData()
+
 	// [case 1] creates a construct manually
 
 	// 1,
@@ -69,6 +83,7 @@ func main() {
 	appUser.OutputUserData()
 	appUser.ClearUserName()
 	appUser.OutputUserData()
+
 }
 
 // [example] use it as regular function:

@@ -16,6 +16,12 @@ type User struct {
 	secretField string
 }
 
+type Admin struct {
+	email    string
+	password string
+	User     // this is called anonymous embedding. `User: User` will be explicit embedding
+}
+
 // receiver argument: parenthesis before function name. It is used to turn the function into methods and attach it to the type that is specified in receiver
 // func (userStruct *user) outputUserData() { <------- or this can work if we want to play with the original value
 func (userStruct User) OutputUserData() {
@@ -33,7 +39,6 @@ func (userStruct *User) ClearUserName() {
 // [case 1] we can return with pointer
 
 // [note] using only "New" is common for the constructor function that is stored in another package
-
 // so instead of func NewUser:
 func New(userFirstName, userLastName, userBirthDate string) (*User, error) {
 	if userFirstName == "" || userLastName == "" || userBirthDate == "" {
@@ -59,3 +64,21 @@ func New(userFirstName, userLastName, userBirthDate string) (*User, error) {
 //			CreatedAt: time.Now(),
 //		}
 //	}
+
+func (admin *Admin) ShowAdminCredentials() {
+	fmt.Println(admin.password)
+	fmt.Println(admin.email)
+}
+
+func NewAdmin(email, password string) Admin {
+	return Admin{
+		email:    email,
+		password: password,
+		User: User{
+			FirstName: "NEW",
+			LastName:  "ADMIN",
+			BirthDate: "--",
+			CreatedAt: time.Now(),
+		},
+	}
+}
