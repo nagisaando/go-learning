@@ -6,15 +6,13 @@ import (
 	"os"
 	"strings"
 
-	note_data "example.com/note/note-data"
+	todo "example.com/todo/todo"
 )
 
 func main() {
+	content := createTodo("enter content")
 
-	title := createNoteData("enter title")
-	content := createNoteData("enter content")
-
-	note, err := note_data.New(title, content)
+	note, err := todo.New(content)
 
 	if err != nil {
 		panic(err)
@@ -30,7 +28,7 @@ func main() {
 
 }
 
-func createNoteData(outputText string) string {
+func createTodo(outputText string) string {
 	fmt.Println(outputText)
 	// fmt.Scanln(data) // Scanln() works only single word or number (does not work with space)
 
