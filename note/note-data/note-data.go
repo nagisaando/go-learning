@@ -27,15 +27,19 @@ func New(title, content string) (*Note, error) {
 
 }
 
+func (note Note) Display() {
+	fmt.Printf("You created note: \ntitle: %v\ncontent: %v\n", note.Title, note.Content)
+}
+
 func (note *Note) Save() error {
 
 	fileName := strings.ReplaceAll(note.Title, " ", "_")
 	fileName = strings.ToLower(fileName)
 
-	fmt.Println(note)
+	// fmt.Println(note)
 	data, err := json.Marshal(note) // convert data to json format and return byte[]
 
-	fmt.Println(data)
+	// fmt.Println(data)
 
 	if err != nil {
 		return err

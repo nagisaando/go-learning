@@ -22,12 +22,16 @@ func New(content string) (*Todo, error) {
 
 }
 
-func (note *Todo) Save() error {
+func (todo Todo) Display() {
+	fmt.Printf("You created todo list: %v\n", todo.Content)
+}
 
-	fmt.Println(note)
-	data, err := json.Marshal(note) // convert data to json format and return byte[]
+func (todo *Todo) Save() error {
 
-	fmt.Println(data)
+	// fmt.Println(todo)
+	data, err := json.Marshal(todo) // convert data to json format and return byte[]
+
+	// fmt.Println(data)
 
 	if err != nil {
 		return err
