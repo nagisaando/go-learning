@@ -25,6 +25,15 @@ type outputtable interface {
 
 func main() {
 
+	printSomething(123)
+	printSomething(12.3443)
+	printSomething("hello")
+	intResult := add(1, 2)
+	fmt.Println(intResult)
+
+	floatResult := add(1.2321321, 1.2321321)
+	fmt.Println(floatResult)
+
 	title := createData("enter title")
 	content := createData("enter content")
 
@@ -56,7 +65,42 @@ func main() {
 }
 
 func printSomething(value interface{}) { // interface{} or "any" indicates any value type is accepted
-	fmt.Println(value)
+	// check type of the value
+
+	// [case 1: extracting type info.]
+	intVal, isInt := value.(int)
+
+	if isInt {
+		fmt.Println("Integer: ", intVal)
+		return
+	}
+
+	floatVal, isFloat := value.(float64)
+
+	if isFloat {
+		fmt.Println("Float64: ", floatVal)
+		return
+	}
+
+	fmt.Println("Invalid value")
+
+	// [case 2: type switch]
+	// we can accept any type of value and we can check the type using switch
+
+	// switch value.(type) {
+	// case int:
+	// 	fmt.Println("Integer: ", value)
+	// case float64:
+	// 	fmt.Println("Float64: ", value)
+
+	// default:
+	// 	fmt.Println("Invalid value")
+	// }
+}
+
+// using generic
+func add[T int | float64 | string](a, b T) T {
+	return a + b
 }
 
 func outputData(data outputtable, successMessage string) error {
