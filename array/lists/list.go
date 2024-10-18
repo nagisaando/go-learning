@@ -36,6 +36,11 @@ func main() {
 	userName = append(userName, "Daniel") // this will be appended to index[2] (third element)
 
 	fmt.Println(userName)
+
+	for index, value := range userName {
+		fmt.Println("index ", index)
+		fmt.Println("value ", value)
+	}
 }
 
 // ================================================================================
