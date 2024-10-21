@@ -26,6 +26,10 @@ func main() {
 
 	fmt.Println(factorial(3))
 	fmt.Println(factorial(5))
+
+	fmt.Println(sumUp(1, numbers...))
+	fmt.Println(sumUp(1, 2, 3, 4))
+
 }
 
 func transformNumbers(numbers *[]int, transform transformFunc) []int {
@@ -82,4 +86,16 @@ func factorial(num int) int {
 	}
 
 	return num * factorial(num-1) // nested function needs to be executed and completed before the main function executes
+}
+
+// variadic functions: function that works with any number of parameters
+// GO merge all the list of the parameter into a slice
+
+func sumUp(startingValue int, numbers ...int) int {
+	sum := 0
+	for _, val := range numbers {
+		sum += val
+	}
+
+	return sum
 }
