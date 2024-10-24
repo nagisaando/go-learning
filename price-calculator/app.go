@@ -33,24 +33,13 @@ func main() {
 
 			price.Save(prices)
 		case "2":
-
-			// newPriceWithTaxRate := map[int][]float64{}
-
-			// // calculate new price based on tax
-			// for _, tax := range taxRates {
-			// 	for _, price := range currentPriceData {
-
-			// 		newPrice := price + (price * (float64(tax) / 100.00))
-
-			// 		newPriceWithTaxRate[tax] = append(newPriceWithTaxRate[tax], newPrice)
-
-			// 	}
-
-			// }
 			priceWithTax := tax.New(currentPriceData)
 			// print result
-			fmt.Println(*priceWithTax)
+			fmt.Println(priceWithTax)
 
+			// save to json file
+
+			priceWithTax.Save()
 			// store data in json format
 			// {0: [10, 20, 30], 10: [11, 22, 33]}
 
@@ -61,10 +50,16 @@ func main() {
 
 func askOptions() (string, []float64, error) {
 	fmt.Println("=======================================")
-	fmt.Printf("Welcome, we have the saved prices data: \n")
+	fmt.Printf("Welcome, we have the saved data: \n\n")
 
+	fmt.Printf("Price: \n")
 	prices, _ := price.Read()
 	fmt.Println(prices)
+
+	fmt.Printf("Price with tax: \n")
+
+	pricesWithTax, _ := tax.Read()
+	fmt.Println(pricesWithTax)
 
 	fmt.Printf("What do you need? Please enter number: \n\n")
 	fmt.Println("1. Scan prices")
