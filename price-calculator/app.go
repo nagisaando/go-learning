@@ -34,14 +34,8 @@ func main() {
 			price.Save(prices)
 		case "2":
 			priceWithTax := tax.New(currentPriceData)
-			// print result
 			fmt.Println(priceWithTax)
-
-			// save to json file
-
 			priceWithTax.Save()
-			// store data in json format
-			// {0: [10, 20, 30], 10: [11, 22, 33]}
 
 		}
 	}
