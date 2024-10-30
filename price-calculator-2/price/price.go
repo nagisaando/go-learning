@@ -4,27 +4,30 @@ import (
 	"fmt"
 
 	"example.com/price-calculator-2/conversion"
-	"example.com/price-calculator-2/filemanager"
+	"example.com/price-calculator-2/iomanager"
 )
 
 type TaxIncludedPriceJob struct {
-	TaxRate           float64                 `json:"tax_rate"`
-	InputPrices       []float64               `json:"input_prices"`
-	TaxIncludedPrices map[string]string       `json:"tax_included_prices"`
-	FileManager       filemanager.FileManager `json:"-"` // adding minus will exclude the key from json
+	TaxRate           float64             `json:"tax_rate"`
+	InputPrices       []float64           `json:"input_prices"`
+	TaxIncludedPrices map[string]string   `json:"tax_included_prices"`
+	IOManager         iomanager.IOManager `json:"-"` // adding minus will exclude the key from json
 }
 
-func NewTaxIncludedPriceJob(fileManager filemanager.FileManager, taxRate float64) *TaxIncludedPriceJob {
+func NewTaxIncludedPriceJob(ioManager iomanager.IOManager, taxRate float64) *TaxIncludedPriceJob {
 	return &TaxIncludedPriceJob{
 		InputPrices: []float64{0, 10, 20},
 		TaxRate:     taxRate,
-		FileManager: fileManager,
+		IOManager:   ioManager,
 		// we don't initialize taxIncludedPrices at the moment since it needs to be calculated later
 	}
 }
 
-func (job *TaxIncludedPriceJob) Process() {
-	job.LoadData()
+func (job *TaxIncludedPriceJob) Process() error {
+	err := job.LoadData()
+	if err != nil {
+		return err
+	}
 	result := make(map[string]string)
 
 	for _, price := range job.InputPrices {
@@ -36,23 +39,23 @@ func (job *TaxIncludedPriceJob) Process() {
 
 	job.TaxIncludedPrices = result
 
-	job.FileManager.WriteJSON(job)
+	return job.IOManager.WriteResult(job)
 
 }
 
-func (job *TaxIncludedPriceJob) LoadData() {
+func (job *TaxIncludedPriceJob) LoadData() error {
 
-	lines, err := job.FileManager.ReadLines()
+	lines, err := job.IOManager.ReadLines()
 	if err != nil {
 		fmt.Println(err)
-		return
+		return err
 	}
 
 	prices, err := conversion.StringsToFloats(lines)
 
 	if err != nil {
 		fmt.Println(err)
-		return
+		return err
 
 	}
 
@@ -61,5 +64,6 @@ func (job *TaxIncludedPriceJob) LoadData() {
 	// does NOT work: func (job TaxIncludedPriceJob) since it is just a copy and can not update the original data
 
 	job.InputPrices = prices
+	return nil
 
 }

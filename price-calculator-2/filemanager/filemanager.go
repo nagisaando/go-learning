@@ -11,7 +11,7 @@ type FileManager struct {
 	OutputPath string
 }
 
-func (fm *FileManager) ReadLines() ([]string, error) {
+func (fm FileManager) ReadLines() ([]string, error) {
 	file, err := os.Open(fm.InputPath)
 
 	if err != nil {
@@ -41,7 +41,7 @@ func (fm *FileManager) ReadLines() ([]string, error) {
 
 }
 
-func (fm *FileManager) WriteJSON(data interface{} /* or "any"*/) error {
+func (fm FileManager) WriteResult(data interface{} /* or "any"*/) error {
 
 	file, err := os.Create(fm.OutputPath)
 
@@ -72,8 +72,8 @@ func (fm *FileManager) WriteJSON(data interface{} /* or "any"*/) error {
 	return nil
 }
 
-func New(inputPath, outputPath string) *FileManager {
-	return &FileManager{
+func New(inputPath, outputPath string) FileManager {
+	return FileManager{
 		InputPath:  inputPath,
 		OutputPath: outputPath,
 	}
