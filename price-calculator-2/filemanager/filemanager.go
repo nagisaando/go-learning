@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"encoding/json"
 	"os"
+	"time"
 )
 
 type FileManager struct {
@@ -17,6 +18,9 @@ func (fm FileManager) ReadLines() ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	// with defer keyword, GO runs once surrounding function/method (i.g. ReadLines()) finished
+	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
 
@@ -32,11 +36,15 @@ func (fm FileManager) ReadLines() ([]string, error) {
 	err = scanner.Err()
 
 	if err != nil {
-		file.Close()
+		// we no longer need to call file.Close() multiple times
+		// thanks to defer file.Close()
+		// file.Close()
 		return nil, err
 	}
 
-	file.Close() // we have to close the file when it is opened
+	// we no longer need to call file.Close() multiple times
+	// thanks to defer file.Close()
+	// file.Close() // we have to close the file when it is opened
 	return lines, nil
 
 }
@@ -48,6 +56,9 @@ func (fm FileManager) WriteResult(data interface{} /* or "any"*/) error {
 	if err != nil {
 		return err
 	}
+	defer file.Close()
+
+	time.Sleep(3 * time.Second)
 
 	// difference between json.marshal and json.encode [reference: https://stackoverflow.com/questions/33061117/in-golang-what-is-the-difference-between-json-encoding-and-marshalling]
 	// [Key point]: they handle JSON encoding and output the result different
@@ -64,11 +75,10 @@ func (fm FileManager) WriteResult(data interface{} /* or "any"*/) error {
 	err = encoder.Encode(data)
 
 	if err != nil {
-		file.Close()
+
 		return err
 	}
 
-	file.Close()
 	return nil
 }
 
