@@ -34,8 +34,9 @@ func PostEvent(c *gin.Context) {
 	var newEvent event
 
 	// BindJSON is to bind received JSON to newEvent
+	// Gin is forgiving framework and if no value is filled for the field, (for example no id) gin will return the null value without throwing error
 	err := c.BindJSON(&newEvent)
-
+	// or err = c.ShouldBindJSON(&newEvent)
 	newEvent.CreatedAt = time.Now()
 
 	if err != nil {
