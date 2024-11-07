@@ -92,6 +92,7 @@ func GetAllEvents() ([]Event, error) {
 
 	for rows.Next() {
 		var event Event
+		// we are reading data from row and assigning them to event struct
 		err := rows.Scan(&event.ID, &event.Name, &event.Description, &event.Location, &event.DateTime, &event.UserID)
 
 		if err != nil {
@@ -111,7 +112,7 @@ func GetAllEvents() ([]Event, error) {
 }
 
 // returning pointer for memory efficiency
-func GetEventByID(id float64) (*Event, error) {
+func GetEventByID(id int64) (*Event, error) {
 
 	// we can query all keys using * but it is recommended for only testing purpose: https://www.sqlitetutorial.net/sqlite-select/
 	query := `SELECT * FROM events WHERE id = ?`
@@ -129,4 +130,25 @@ func GetEventByID(id float64) (*Event, error) {
 
 	return &event, nil
 
+}
+
+func (event Event) Update(id int64) (int64, error) {
+
+	query := `
+	UPDATE 
+		events 
+	SET
+		name = ?,
+		description = ?,
+		location = ? ,
+		dateTime = ?
+	WHERE
+		id = ?
+	`
+
+	result, err := db.DB.Exec(query, event.Name, event.Description, event.Location, event.DateTime, id)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected()
 }
