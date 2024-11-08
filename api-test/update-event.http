@@ -1,9 +1,9 @@
-PUT http://localhost:8080/events/11
+PUT http://localhost:8080/events/1
 Content-Type: application/json
 
 {
     "name": "firsttt event", 
-    "description": "firstttt event description", 
+    "description": "first event description", 
     "location": "japan", 
     "date_time": "2025-01-04T15:30:00.000Z"
 }

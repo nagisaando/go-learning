@@ -132,7 +132,7 @@ func GetEventByID(id int64) (*Event, error) {
 
 }
 
-func (event Event) Update(id int64) (int64, error) {
+func (event Event) Update() (int64, error) {
 
 	query := `
 	UPDATE 
@@ -146,9 +146,9 @@ func (event Event) Update(id int64) (int64, error) {
 		id = ?
 	`
 
-	result, err := db.DB.Exec(query, event.Name, event.Description, event.Location, event.DateTime, id)
+	result, err := db.DB.Exec(query, event.Name, event.Description, event.Location, event.DateTime, event.ID)
 	if err != nil {
 		return 0, err
 	}
-	return result.RowsAffected()
+	return result.RowsAffected() // it will return 0 if no row is updated
 }
