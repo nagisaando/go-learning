@@ -152,3 +152,18 @@ func (event Event) Update() (int64, error) {
 	}
 	return result.RowsAffected() // it will return 0 if no row is updated
 }
+
+func (event Event) DELETE() (int64, error) {
+	query := `
+	DELETE FROM events
+	WHERE id = ?
+	`
+
+	result, err := db.DB.Exec(query, event.ID)
+
+	if err != nil {
+		return 0, err
+	}
+
+	return result.RowsAffected()
+}

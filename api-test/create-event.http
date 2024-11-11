@@ -2,8 +2,8 @@ POST http://localhost:8080/events
 Content-Type: application/json
 
 {
-    "name": "third event", 
-    "description": "second event description", 
+    "name": "forth event", 
+    "description": "forth event description", 
     "location": "cancun", 
     "date_time": "2025-01-03T15:30:00.000Z"
 }
