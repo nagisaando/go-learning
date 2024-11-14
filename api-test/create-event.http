@@ -1,5 +1,6 @@
 POST http://localhost:8080/events
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV4YW1wbGUxQGdtYWlsLmNvbSIsImV4cCI6MTczMTU5Njc1NywidXNlcklkIjoxfQ.QzwnafzB8P81DIGAKX4o3f-RZuhYxphKzOERnrpOf8A
 
 {
     "name": "forth event", 
