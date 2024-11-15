@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"example.com/rest-api-2/models"
-	"example.com/rest-api-2/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -40,27 +39,16 @@ func getEventById(context *gin.Context) {
 }
 func createEvent(context *gin.Context) {
 
-	token := context.Request.Header.Get("Authorization")
-	if token == "" {
-		context.JSON(http.StatusUnauthorized, gin.H{"error": "Not authorized"})
-		return
-	}
-
-	userId, err := utils.VerifyToken(token)
-
-	if err != nil {
-		context.JSON(http.StatusUnauthorized, gin.H{"error": "Not authorized"})
-		return
-	}
-
 	var event models.Event
 
-	err = context.ShouldBindJSON(&event)
+	err := context.ShouldBindJSON(&event)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request payload"})
 		return
 	}
+
+	userId := context.GetInt64("userId")
 
 	event.UserID = userId
 

@@ -1,5 +1,6 @@
 PUT http://localhost:8080/events/1
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV4YW1wbGUxQGdtYWlsLmNvbSIsImV4cCI6MTczMTY4MzExMCwidXNlcklkIjoxfQ.I1b9jWgE6HDWb49llvpKM_X77XCCbA040I3d6PIs9qY
 
 {
     "name": "firsttt event", 
