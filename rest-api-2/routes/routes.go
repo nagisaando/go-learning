@@ -21,6 +21,8 @@ func RegisterRoutes(server *gin.Engine) {
 	authenticated.Use(middleware.Authenticate)    // setting middleware
 	authenticated.PUT("/events/:id", updateEvent) // now middleware will be executed before these handler executes
 	authenticated.DELETE("events/:id", deleteEvent)
+	authenticated.POST("events/:id/register", registerForEvent)
+	authenticated.DELETE("events/:id/register", cancelForRegistration)
 
 	server.POST("/signup", signup)
 	server.POST("/login", login)

@@ -1,9 +1,9 @@
-PUT http://localhost:8080/events/1
+PUT http://localhost:8080/events/10
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV4YW1wbGUxQGdtYWlsLmNvbSIsImV4cCI6MTczMTY4MzExMCwidXNlcklkIjoxfQ.I1b9jWgE6HDWb49llvpKM_X77XCCbA040I3d6PIs9qY
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV4YW1wbGUxQGdtYWlsLmNvbSIsImV4cCI6MTczMTkzOTI4MCwidXNlcklkIjoxfQ.wUhzWn-4CSUxDNetB83Eayyywfsklhzi5R-6G4GMJpo
 
 {
-    "name": "firsttt event", 
+    "name": "first event", 
     "description": "first event description", 
     "location": "japan", 
     "date_time": "2025-01-04T15:30:00.000Z"
